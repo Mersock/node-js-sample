@@ -1,20 +1,22 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('Hello Express');
-});
+// console.log(__dirname);
+// console.log(__filename);
+// console.log(path.join(__dirname,'../public'));
 
-app.get('/help', (req, res) => {
-    res.send('help page')
-});
+//set static file
+const publicDirectoryPath = path.join(__dirname,'../public');
 
-app.get('/about', (req, res) => {
-    res.send('about');
-});
+app.use(express.static(publicDirectoryPath));
 
-app.get('/weather', (req,res) => {
-    res.send('weather');
+
+app.get('/weather', (req, res) => {
+    res.send({
+        'weather': 'name',
+        'cast': 'now'
+    });
 });
 
 
