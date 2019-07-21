@@ -72,8 +72,8 @@ app.get('/weather', (req, res) => {
                 address:req.query.address
             })
         });
-
     });
+
 });
 
 app.get('/product', (req, res) => {
