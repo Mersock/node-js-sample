@@ -79,19 +79,61 @@ MongoClient.connect(connectionURL, { useNewUrlParser: true }, (error, client) =>
     // })
 
 
-    db.collection('tasks').findOne({ _id: new ObjectID("5d3ebdc970bab60a0e625d16") }, (error, result) => {
-        if (error) {
-            return console.log('Unable to fetch');
-        }
+    // db.collection('tasks').findOne({ _id: new ObjectID("5d3ebdc970bab60a0e625d16") }, (error, result) => {
+    //     if (error) {
+    //         return console.log('Unable to fetch');
+    //     }
+    //     console.log(result);
+    // });
+
+    // db.collection('tasks').find({ completed: false }).toArray((error, tasks) => {
+    //     if (error) {
+    //         return console.log('Unable to fetch');
+    //     }
+    //     console.log(tasks);
+    // });
+
+    // db.collection('users').updateOne({
+    //     _id: new ObjectID("5d3ec577590a120b585b7a0f")
+    // }, {
+            // $set: {
+            //     name: 'Mersock'
+            // }
+        //     $inc:{
+        //         age:1
+        //     }
+        // }).then((result) => {
+        //     console.log(result);
+        // }).catch((error) => {
+        //     console.log(error);
+        // });
+
+    // db.collection('tasks').updateMany({
+    //     completed:false
+    // },{
+    //     $set:{
+    //         completed:true
+    //     }
+    // }).then((result) => {
+    //     console.log(result);
+    // }).catch((error) => {
+    //     console.log(error);
+    // })    
+
+    // db.collection('users').deleteMany({
+    //     age:26
+    // }).then((result) => {
+    //     console.log(result);
+    // }).catch((error) => {
+    //     console.log(error);
+    // })
+
+    db.collection('tasks').deleteOne({
+        description:'read'
+    }).then((result) => {
         console.log(result);
-    })
-
-    db.collection('tasks').find({ completed: false }).toArray((error, tasks) => {
-        if (error) {
-            return console.log('Unable to fetch');
-        }
-        console.log(tasks);
-    })
-
+    }).catch((error) => {
+        console.log(error);
+    });
 });
 
