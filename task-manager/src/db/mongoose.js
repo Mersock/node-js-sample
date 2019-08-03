@@ -9,63 +9,76 @@ mongoose.connect(connectionURL, {
 });
 
 //define model
-const User = mongoose.model('User', {
-    name: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    email: {
-        type: String,
-        required: true,
-        trim: true,
-        lowercase: true,
-        validate(value) {
-            if (!validator.isEmail(value)) {
-                throw new Error('Email is invalid.');
-            }
-        }
-    },
-    age: {
-        type: Number,
-        default: 0,
-        validate(value) {
-            if (value < 0) {
-                throw new Error('Age must be a postive number.');
-            }
-        }
-    }
-});
-
-// const Task = mongoose.model('Task', {
-//     description:{
-//         type: String
+// const User = mongoose.model('User', {
+//     name: {
+//         type: String,
+//         required: true,
+//         trim: true
 //     },
-//     completed:{
-//         type: Boolean
+//     email: {
+//         type: String,
+//         required: true,
+//         trim: true,
+//         lowercase: true,
+//         validate(value) {
+//             if (!validator.isEmail(value)) {
+//                 throw new Error('Email is invalid.');
+//             }
+//         }
+//     },
+//     password:{
+//         type: String,
+//         required: true,
+//         minlength: 7,
+//         trim:true,
+//         validate(value){
+//             if(value.toLowerCase().includes('password')){
+//                 throw new Error('Password cannnot contain "password" ');
+//             }
+//         }
+//     },
+//     age: {
+//         type: Number,
+//         default: 0,
+//         validate(value) {
+//             if (value < 0) {
+//                 throw new Error('Age must be a postive number.');
+//             }
+//         }
 //     }
-// })
+// });
+
+const Task = mongoose.model('Task', {
+    description:{
+        type: String,
+        required:true,
+    },
+    completed:{
+        type: Boolean,
+        default:false,
+    }
+})
 
 // instance data
-const me = new User({
-    name: '      Knz       ',
-    email: 'EMAIL@MAIL.COM       '
-});
+// const me = new User({
+//     name: '      Knz       ',
+//     email: 'EMAIL@MAIL.COM       ',
+//     password:'      Phumthawan   '
+// });
 
-// const data = new Task({
-//     description: 'new active now',
-//     completed: false
-// })
+const data = new Task({
+    description: 'active',
+})
 
 //save to db
-me.save()
-    .then((me) => {
-        console.log(me);
-    }).catch((error) => {
-        console.log('Error!', error);
-    })
+// me.save()
+//     .then((me) => {
+//         console.log(me);
+//     }).catch((error) => {
+//         console.log('Error!', error);
+//     })
 
-// data.save()
-//     .then(data => console.log(data))
-//     .catch(error => console.log('Error!', error));
+data.save()
+    .then(data => console.log(data))
+    .catch(error => console.log('Error!', error));
 
