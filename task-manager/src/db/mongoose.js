@@ -10,42 +10,48 @@ mongoose.connect(connectionURL, {
 //define model
 const User = mongoose.model('User', {
     name: {
-        type: String
+        type: String,
+        required: true
     },
     age: {
-        type: Number
+        type: Number,
+        validate(value){
+            if(value < 0){
+                throw new Error('Age must be a postive number');
+            }
+        }
     }
 });
 
-const Task = mongoose.model('Task', {
-    description:{
-        type: String
-    },
-    completed:{
-        type: Boolean
-    }
-})
+// const Task = mongoose.model('Task', {
+//     description:{
+//         type: String
+//     },
+//     completed:{
+//         type: Boolean
+//     }
+// })
 
 // instance data
-// const me = new User({
-//     name: 'Phumthawan',
-//     age: 26
-// });
+const me = new User({
+    name:'Knz',
+    age:-1
+});
 
-const data = new Task({
-    description: 'new active now',
-    completed: false
-})
+// const data = new Task({
+//     description: 'new active now',
+//     completed: false
+// })
 
 //save to db
-// me.save()
-//     .then((me) => {
-//         console.log(me);
-//     }).catch((error) => {
-//         console.log('Error!', error);
-//     })
+me.save()
+    .then((me) => {
+        console.log(me);
+    }).catch((error) => {
+        console.log('Error!', error);
+    })
 
-data.save()
-    .then(data => console.log(data))
-    .catch(error => console.log('Error!', error));
+// data.save()
+//     .then(data => console.log(data))
+//     .catch(error => console.log('Error!', error));
 
