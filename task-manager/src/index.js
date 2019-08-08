@@ -33,6 +33,7 @@ const jwt = require('jsonwebtoken');
 //     console.log(isMatch);
 // }
 
+//gen token
 const myFunction = async () => {
     const token = jwt.sign({ _id:'abc123' }, 'hello world',{expiresIn: '0 seconds'});
     console.log(token);
@@ -40,5 +41,5 @@ const myFunction = async () => {
     console.log(data);
 }
 
-myFunction();
+// myFunction();
 
