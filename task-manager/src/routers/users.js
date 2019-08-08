@@ -1,14 +1,16 @@
 const User = require('../models/user');
 const express = require('express');
 const router = new express.Router();
+const auth = require('../meddleware/auth');
 
-router.get('/users', async (req, res) => {
-    try {
-        const user = await User.find();
-        res.send(user)
-    } catch (error) {
-        res.status(500).send();
-    }
+router.get('/users/me',auth, async (req, res) => {
+    res.send(req.user);
+    // try {
+    //     const user = await User.find();
+    //     res.send(user)
+    // } catch (error) {
+    //     res.status(500).send();
+    // }
 
     // User.find().then((users) => {
     //     res.send(users);
