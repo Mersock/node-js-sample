@@ -1,6 +1,7 @@
 const Task = require('../models/task');
 const express = require('express');
 const router = new express.Router();
+const auth = require('../meddleware/auth');
 
 
 router.get('/tasks', async (req, res) => {
@@ -78,13 +79,16 @@ router.delete('/tasks/:id', async (req, res) => {
     }
 })
 
-router.post('/tasks', async (req, res) => {
-    const task = new Task(req.body);
+router.post('/tasks', auth, async (req, res) => {
+    const task = new Task({
+        ...req.body,
+        owner: req.user._id
+    })
     try {
         await task.save();
         res.status(201).send(task);
     } catch (error) {
-        res.status(400).send()
+        res.status(400).send(error)
     }
 
     // task.save()

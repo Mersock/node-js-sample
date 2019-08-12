@@ -40,15 +40,6 @@ const jwt = require('jsonwebtoken');
 //     console.log(isMatch);
 // }
 
-const pet = {
-    name:'knz'
-}
-
-
-pet.toJSON = function () {
-    return {}
-}
-
 // console.log(JSON.stringify(pet));
 
 //gen token
@@ -60,4 +51,18 @@ const myFunction = async () => {
 }
 
 // myFunction();
+const Task = require('./models/task');
+const User = require('./models/user');
+
+const main = async () => {
+    // const tasks = await Task.findById('5d5135cd3dcbda38b19cf858')
+    // await tasks.populate('owner').execPopulate();
+    // console.log(tasks.owner);
+
+    const user = await User.findById('5d51348494c61537d05ebea8');
+    await user.populate('tasks').execPopulate();
+    console.log(user.tasks);
+}
+
+main();
 
