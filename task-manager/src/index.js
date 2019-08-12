@@ -40,6 +40,17 @@ const jwt = require('jsonwebtoken');
 //     console.log(isMatch);
 // }
 
+const pet = {
+    name:'knz'
+}
+
+
+pet.toJSON = function () {
+    return {}
+}
+
+// console.log(JSON.stringify(pet));
+
 //gen token
 const myFunction = async () => {
     const token = jwt.sign({ _id:'abc123' }, 'hello world',{expiresIn: '0 seconds'});
