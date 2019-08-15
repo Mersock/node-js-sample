@@ -14,14 +14,31 @@ const port = process.env.PORT || 3000;
 const userRouter = require('./routers/users');
 const taksRouter = require('./routers/tasks');
 
-// const multer = require('multer');
-// const upload = multer({
-//     dest: 'images'
-// });
+const multer = require('multer');
+const upload = multer({
+    dest: 'avatars',
+    limits: {
+        fileSize: 1000000
+    },
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+            return cb(new Error('Please up load JPG,JPEG or PNG'));
+        }
+        cb(undefined, true)
 
-// app.post('/upload', upload.single('upload'), (req, res) => {
-//     res.send();
-// });
+        // cb(new Error('File must be a PDF'))
+        // cb(undefined, true)
+        // cb(undefined, false)
+    }
+});
+const errorMiddleware = (req, res, next) => {
+    throw new Error('Form my middle ware');
+}
+app.post('/upload', upload.single('upload'), (req, res) => {
+    res.send();
+}, (error, req, res, next) => {
+    res.status(400).send({ error: error.message })
+});
 
 //set express json
 app.use(express.json());
