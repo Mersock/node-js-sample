@@ -2,6 +2,7 @@ const User = require('../models/user');
 const express = require('express');
 const router = new express.Router();
 const auth = require('../meddleware/auth');
+const multer = require('multer');
 
 router.get('/users/me', auth, async (req, res) => {
     res.send(req.user);
@@ -105,6 +106,27 @@ router.post('/users', async (req, res) => {
         res.status(400).send(error)
     }
     // user.save().then(() => res.status(201).send(user)).catch((error) => res.status(400).send(error));
+});
+
+
+const upload = multer({
+    dest: 'avatars',
+    limits: {
+        fieldSize: 100000
+    },
+    fileFilter(req, file, cb) {
+        if (!file.originalname.match(/\.(doc|docx)$/)) {
+            return cb(new Error('Please up load PDF Word Document'));
+        }
+        cb(undefined, true)
+
+        // cb(new Error('File must be a PDF'))
+        // cb(undefined, true)
+        // cb(undefined, false)
+    }
+});
+router.post('/users/me/avatar', upload.single('avatar'), (req, res) => {
+    res.send();
 });
 
 router.post('/users/login', async (req, res) => {

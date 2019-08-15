@@ -14,6 +14,15 @@ const port = process.env.PORT || 3000;
 const userRouter = require('./routers/users');
 const taksRouter = require('./routers/tasks');
 
+// const multer = require('multer');
+// const upload = multer({
+//     dest: 'images'
+// });
+
+// app.post('/upload', upload.single('upload'), (req, res) => {
+//     res.send();
+// });
+
 //set express json
 app.use(express.json());
 
@@ -25,8 +34,8 @@ app.listen(port, () => {
     console.log(`Server is up on port ${port}`);
 });
 
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+// const bcrypt = require('bcryptjs');
+// const jwt = require('jsonwebtoken');
 
 // hash password
 // const myFunction = async() => {
@@ -43,26 +52,26 @@ const jwt = require('jsonwebtoken');
 // console.log(JSON.stringify(pet));
 
 //gen token
-const myFunction = async () => {
-    const token = jwt.sign({ _id:'abc123' }, 'hello world',{expiresIn: '0 seconds'});
-    console.log(token);
-    const data = jwt.verify(token, 'hello world');
-    console.log(data);
-}
+// const myFunction = async () => {
+//     const token = jwt.sign({ _id:'abc123' }, 'hello world',{expiresIn: '0 seconds'});
+//     console.log(token);
+//     const data = jwt.verify(token, 'hello world');
+//     console.log(data);
+// }
 
 // myFunction();
-const Task = require('./models/task');
-const User = require('./models/user');
+// const Task = require('./models/task');
+// const User = require('./models/user');
 
-const main = async () => {
+// const main = async () => {
     // const tasks = await Task.findById('5d5135cd3dcbda38b19cf858')
     // await tasks.populate('owner').execPopulate();
     // console.log(tasks.owner);
 
-    const user = await User.findById('5d51348494c61537d05ebea8');
-    await user.populate('tasks').execPopulate();
+    // const user = await User.findById('5d51348494c61537d05ebea8');
+    // await user.populate('tasks').execPopulate();
     // console.log(user.tasks);
-}
+// }
 
 // main();
 
