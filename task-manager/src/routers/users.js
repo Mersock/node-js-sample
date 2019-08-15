@@ -112,11 +112,11 @@ router.post('/users', async (req, res) => {
 const upload = multer({
     dest: 'avatars',
     limits: {
-        fieldSize: 100000
+        fileSize: 1000000
     },
     fileFilter(req, file, cb) {
-        if (!file.originalname.match(/\.(doc|docx)$/)) {
-            return cb(new Error('Please up load PDF Word Document'));
+        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+            return cb(new Error('Please up load JPG,JPEG or PNG'));
         }
         cb(undefined, true)
 
