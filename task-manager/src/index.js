@@ -16,7 +16,7 @@ const taksRouter = require('./routers/tasks');
 
 const multer = require('multer');
 const upload = multer({
-    dest: 'avatars',
+    dest: 'images',
     limits: {
         fileSize: 1000000
     },
