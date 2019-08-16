@@ -135,12 +135,24 @@ router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) 
     res.status(400).send({ error: error.message });
 });
 
-router.delete('/users/me/avatar', auth, async (req,res) => {
+router.delete('/users/me/avatar', auth, async (req, res) => {
     req.user.avatar = undefined
-    await req.user.save()
-    res.send()
+    await req.user.save();
+    res.send();
 });
 
+router.get('/users/:id/avatar', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id)
+        if (!user || !user.avatar) {
+            throw new Error('Not Found.');
+        }
+        res.set('Content-Type', 'image/jpg');
+        res.send(user.avatar);
+    } catch (error) {
+        res.status(404).send()
+    }
+});
 
 router.post('/users/login', async (req, res) => {
     try {
