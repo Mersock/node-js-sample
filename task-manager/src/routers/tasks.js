@@ -1,7 +1,7 @@
 const Task = require('../models/task');
 const express = require('express');
 const router = new express.Router();
-const auth = require('../meddleware/auth');
+const auth = require('../middleware/auth');
 
 
 router.get('/tasks', auth, async (req, res) => {
