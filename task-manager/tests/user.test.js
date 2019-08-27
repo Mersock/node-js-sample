@@ -5,7 +5,7 @@ const app = require('../src/app');
 const User = require('../src/models/user');
 
 
-const userOneId = new mongoose.Types.ObjectId()
+const userOneId = new mongoose.Types.ObjectId();
 const userOne = {
     _id: userOneId,
     name: 'Mike',
@@ -86,7 +86,7 @@ test('Should delete account for user', async () => {
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
         .expect(200)
     const user = await User.findById(userOneId);
-    expect(user).toBeNull()    
+    expect(user).toBeNull()
 });
 
 test('Should not delete account for unauthenticate user', async () => {
@@ -94,4 +94,36 @@ test('Should not delete account for unauthenticate user', async () => {
         .delete('/users/me')
         .send()
         .expect(401)
+});
+
+test('Should upload avatar image', async () => {
+    await request(app)
+        .post('/users/me/avatar')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .attach('avatar', 'tests/fixtures/profile-pic.jpg')
+        .expect(200);
+    const user = await User.findById(userOneId);
+    expect(user.avatar).toEqual(expect.any(Buffer));
+});
+
+test('Should update valid user fields', async () => {
+    await request(app)
+        .patch('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            name:'knzphumthawan'
+        })
+        expect(200)
+        const user = await User.findById(userOneId);
+        expect(user.name).toEqual('knzphumthawan')
+});
+
+test('Should not update invalid fields', async () => {
+    await request(app)
+        .patch('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            location:'Bangkok'
+        })
+        .expect(400)
 })
