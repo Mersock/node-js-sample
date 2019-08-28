@@ -28,15 +28,19 @@ io.on('connection', (socket) => {
     // })
 
     socket.emit('message', 'Welcome!');
-    socket.broadcast.emit('message','A new user has joined!')
+    socket.broadcast.emit('message', 'A new user has joined!')
 
     socket.on('sendMessage', (message) => {
         io.emit('message', message)
     });
 
-    socket.on('disconnect',() => {
-        io.emit('message','User has left!')
+    socket.on('sendLocation', (position) => {
+        io.emit('message',`https://google.com/maps?q=${position.latitude},${position.longitude}`)
     })
+
+    socket.on('disconnect', () => {
+        io.emit('message', 'User has left!')
+    });
 });
 
 //set server
