@@ -13,9 +13,30 @@ const port = process.env.PORT || 3000;
 const publicDirectoryPath = path.join(__dirname, '../public');
 app.use(express.static(publicDirectoryPath));
 
+let count = 0;
 //set socket io
-io.on('connection', () => {
-    console.log('Connect Web Socket')
+io.on('connection', (socket) => {
+    console.log('Connect Web Socket');
+
+    // socket.emit('countUpdated', count);
+
+
+    // socket.on('increment', () => {
+    //     count++
+    //     socket.emit('countUpdated', count);
+    //     io.emit('countUpdated', count)
+    // })
+
+    socket.emit('message', 'Welcome!');
+    socket.broadcast.emit('message','A new user has joined!')
+
+    socket.on('sendMessage', (message) => {
+        io.emit('message', message)
+    });
+
+    socket.on('disconnect',() => {
+        io.emit('message','User has left!')
+    })
 });
 
 //set server
