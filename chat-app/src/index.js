@@ -3,7 +3,7 @@ const express = require('express');
 const http = require('http');
 const socketio = require('socket.io');
 const Filter = require('bad-words');
-const {generateMessage,generateLocationMessage} = require('./utils/message');
+const { generateMessage, generateLocationMessage } = require('./utils/message');
 
 const app = express();
 const server = http.createServer(app);
@@ -29,9 +29,15 @@ io.on('connection', (socket) => {
     //     io.emit('countUpdated', count)
     // })
 
-    socket.emit('message', generateMessage('Welcome!'));
+    socket.on('join', ({ username, room }) => {
+        socket.join(room);
 
-    socket.broadcast.emit('message', generateMessage('A new user has joined!'))
+        socket.emit('message', generateMessage('Welcome!'));
+        socket.broadcast.to(room).emit('message', generateMessage(`${username} has joined!`));
+
+        //socket.emit , io.emit, socket.broadcast.emit
+        //io.to.emit, socket.broadcast.to.emit
+    });
 
     socket.on('sendMessage', (message, callback) => {
         const filter = new Filter();
@@ -40,7 +46,7 @@ io.on('connection', (socket) => {
             return callback('Profanity is not allowed');
         }
 
-        io.emit('message',generateMessage(message));
+        io.emit('message', generateMessage(message));
         callback()
     });
 
@@ -50,7 +56,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('disconnect', () => {
-        io.emit('message', generateMessage('User has left!'))
+        io.to(`Center City`).emit('message', generateMessage('User has left!'))
     });
 });
 
