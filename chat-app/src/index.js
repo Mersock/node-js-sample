@@ -53,7 +53,7 @@ io.on('connection', (socket) => {
     socket.on('sendLocation', (position, callback) => {
         io.emit('locationMessage', generateLocationMessage(`https://google.com/maps?q=${position.latitude},${position.longitude}`));
         callback();
-    })
+    });
 
     socket.on('disconnect', () => {
         io.to(`Center City`).emit('message', generateMessage('User has left!'))
